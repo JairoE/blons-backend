@@ -1,31 +1,30 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
-  end
-
-  def new
-    @user = User.new
+    render json: @users
   end
 
   def create
     @user = User.create(user_params)
-    redirect_to user_path(@user)
+
+    render json: @user
   end
 
   def show
     @user = User.find(params[:id])
-  end
-
-  def edit
+    render json: @user
   end
 
   def update
+    @user = User.find(params[:id]).update(user_params)
+
+    render @user
   end
 
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :score)
+    params.require(:user).permit(:username, :highscore)
   end
 end
